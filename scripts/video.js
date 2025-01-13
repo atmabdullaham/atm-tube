@@ -11,7 +11,21 @@ const loadCategories = () => {
 
 
 // create display categories
-const displayCategories = (data) => {
- console.log(data)
+const displayCategories = (categories) => {
+ const categoryContainer = document.getElementById("categories");
+ categories.forEach(item => {
+  console.log(item);
+  // create a button
+  const button = document.createElement("button");
+  button.classList = "btn";
+  button.innerText = item.category;
+  //  add button to the category container
+  categoryContainer.append(button);
+ });
+
 }
 loadCategories();
+// {
+// category_id: '1001',
+// category: 'Music'
+// }
