@@ -24,8 +24,6 @@ const displayCategories = (categories) => {
 loadCategories();
 
 
-
-
 // ________load videos
 const loadVideos = () => {
   // __Fetch the data
@@ -35,6 +33,8 @@ const loadVideos = () => {
     .catch((error) => console.log(error));
 }
 loadVideos();
+
+
 
 // _________display videos,
 const displayVideos = (videos) => {
@@ -54,12 +54,6 @@ const displayVideos = (videos) => {
     videoContainer.classList.add("grid");
   }
   videos.forEach(video => {
-    console.log(video)
-
-
-
-
-
     const card = document.createElement("div");
     card.classList = "card card-compact"
     card.innerHTML = `
@@ -79,10 +73,8 @@ const displayVideos = (videos) => {
       <div class="flex items-center gap-2" > 
       <p text-gray-400 >${video.authors[0].profile_name}</p>
 ${video.authors[0].verified == true ? '<img id = "verification-status" class="w-5" src = "https://img.icons8.com/?size=48&id=D9RtvkuOe31p&format=png" />' : ""} 
-      
-   
       </div >
-      
+      <p> <button onclick = "loadDetails('${video.video_id}')" class ="btn btn-sm btn-error" > Details </button> </p>
     </div >
   </div >
  `
@@ -90,13 +82,45 @@ ${video.authors[0].verified == true ? '<img id = "verification-status" class="w-
   });
 }
 
+// _______________________________
+const loadDetails = async (videoId) => {
+  // console.log(videoId);
+  const uri = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+  const res = await fetch(uri);
+  const data = await res.json();
+  displayDetails(data.video);
+}
+
+// _______________________________
+const displayDetails = (video) => {
+  console.log(video);
+  const detailContainer = document.getElementById("modal-content");
+  detailContainer.innerHTML = `
+  <img src = ${video.thumbnail} />
+  <p> ${video.description}</p>
+  `
+
+  // Way-1
+  // document.getElementById("showModalData").click();
+
+  // way-2
+  document.getElementById("customModal").showModal();
+}
+
+
+
+
+
+
+
+//     ___________________
 const removeActiveClass = () => {
   const buttons = document.getElementsByClassName("category-btn");
   for (let btn of buttons) {
     btn.classList.remove("active")
   }
 }
-
+//  ____________________
 const loadCategoryVideo = (id) => {
   fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
     .then(res => res.json())
