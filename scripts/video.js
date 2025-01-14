@@ -14,7 +14,7 @@ const displayCategories = (categories) => {
     // create a button
     const buttonContainer = document.createElement("div");
     buttonContainer.innerHTML = `
-    <button onclick = "loadCategoryVideo(${item.category_id})" class = "btn" >${item.category} </button>
+    <button id = "btn-${item.category_id}" onclick = "loadCategoryVideo(${item.category_id})" class = "btn category-btn" >${item.category} </button>
     `
     //  add button to the category container
     categoryContainer.append(buttonContainer);
@@ -90,11 +90,27 @@ ${video.authors[0].verified == true ? '<img id = "verification-status" class="w-
   });
 }
 
+const removeActiveClass = () => {
+  const buttons = document.getElementsByClassName("category-btn");
+  for (let btn of buttons) {
+    btn.classList.remove("active")
+  }
+}
 
 const loadCategoryVideo = (id) => {
   fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
     .then(res => res.json())
-    .then(data => displayVideos(data.category))
+    .then(data => {
+      // sobaike active class remove koro
+
+      removeActiveClass();
+      //  id er class kactive koro
+      const activeBtn = document.getElementById(`btn-${id}`);
+
+      activeBtn.classList.add("active")
+
+      displayVideos(data.category)
+    })
     .catch((error) => console.log(error));
 }
 
