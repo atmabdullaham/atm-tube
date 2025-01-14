@@ -1,4 +1,4 @@
-// create load categories
+// _________load categories
 const loadCategories = () => {
  // __Fetch the data
  fetch("https://openapi.programming-hero.com/api/phero-tube/categories")
@@ -7,8 +7,7 @@ const loadCategories = () => {
   .catch((error) => console.log(error));
 }
 
-
-// create display categories
+//_________display categories
 const displayCategories = (categories) => {
  const categoryContainer = document.getElementById("categories");
  categories.forEach(item => {
@@ -26,7 +25,7 @@ loadCategories();
 
 
 
-// create load videos
+// ________load videos
 const loadVideos = () => {
  // __Fetch the data
  fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
@@ -36,7 +35,7 @@ const loadVideos = () => {
 }
 loadVideos();
 
-//  create display videos,
+// _________display videos,
 const displayVideos = (videos) => {
  const videoContainer = document.getElementById("videos")
  videos.forEach(video => {
@@ -45,16 +44,23 @@ const displayVideos = (videos) => {
   card.classList = "card card-compact"
   card.innerHTML = `
   
-  <figure>
+  <figure class = "h-[200px]">
     <img
+     class = "h-full w-full object-cover"
       src= ${video.thumbnail}
       alt="Shoes" />
   </figure>
-  <div class="card-body">
-    <h2 class="card-title">Shoes!</h2>
-    <p>If a dog chews shoes whose shoes does he choose?</p>
-    <div class="card-actions justify-end">
-      <button class="btn btn-primary">Buy Now</button>
+  <div class="py-2 px-0 flex gap-3 items-center">
+  <div> 
+         <img class = "w-12 h-12 rounded-full object-cover" src = ${video.authors[0].profile_picture}/> 
+  </div>
+    <div class="">
+      <h2 class="card-title ">${video.title} </h2>
+      <div class="flex items-center gap-2" > 
+      <p text-gray-400 >${video.authors[0].profile_name}</p>
+      <img class="w-5" src = "https://img.icons8.com/?size=48&id=D9RtvkuOe31p&format=png" />
+      </div>
+      
     </div>
   </div>
   `
